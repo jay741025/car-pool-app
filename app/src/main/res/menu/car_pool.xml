@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools" tools:context=".CarPoolActivity">
+<item android:id="@+id/path_setting"
+    android:icon="@drawable/ic_action_place"
+    android:showAsAction="always"
+    android:title="@string/pathPlanning"/>
+</menu>

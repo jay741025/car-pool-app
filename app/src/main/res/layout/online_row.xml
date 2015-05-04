@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+    
+        	<LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	         >
+
+                <com.facebook.login.widget.ProfilePictureView
+                    android:id="@+id/profilePicture"
+                    android:layout_height="50dp"
+                    android:layout_width="50dp"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:maxHeight="50dp"
+                    android:maxWidth="50dp"
+                    facebook:preset_size="small"/>
+
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:orientation="vertical"
+			    android:paddingLeft="10dp" >
+
+			<LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="horizontal"
+                android:gravity="center"
+	         >    
+
+			<TextView
+			    android:id="@+id/name"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="2dp"
+			    android:layout_weight="1"
+			    android:padding="1dp"
+			    android:text="111"
+			    android:textSize="21sp" />
+
+            </LinearLayout>
+
+            </LinearLayout>
+            </LinearLayout>
+
+    
+ </LinearLayout>
