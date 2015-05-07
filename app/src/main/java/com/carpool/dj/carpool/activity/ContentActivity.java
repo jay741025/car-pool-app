@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class ContentActivity extends FragmentActivity {
@@ -68,7 +71,7 @@ public class ContentActivity extends FragmentActivity {
         tracker.enableAdvertisingIdCollection(true);
 		// Set screen name.
 		// Where path is a String representing the screen name.
-        tracker.setScreenName("friendActivity");
+        tracker.setScreenName("ContentActivity");
 		// Send a screen view.
         tracker.send(new HitBuilders.AppViewBuilder().build());
 
@@ -76,26 +79,43 @@ public class ContentActivity extends FragmentActivity {
 		tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 		// 1
 		tabHost.addTab(
-				tabHost.newTabSpec("地圖").setIndicator("地圖",null
-						),
+                tabHost.newTabSpec(getString(R.string.map)).setIndicator(getString(R.string.map), null
+                ),
                 MapFragment.class, null);
 		// 2
 		tabHost.addTab(
-				tabHost.newTabSpec("訊息").setIndicator("訊息",null
+				tabHost.newTabSpec(getString(R.string.msg)).setIndicator(getString(R.string.msg),null
 						),
                 MsgFragment.class, null);
+        // 2
+        tabHost.addTab(
+                tabHost.newTabSpec(getString(R.string.friends)).setIndicator(getString(R.string.friends),null
+                ),
+                FriendsFragment.class, null);
 		// 3
 		tabHost.addTab(
-				tabHost.newTabSpec("上線人數").setIndicator("上線人數",
+				tabHost.newTabSpec(getString(R.string.online)).setIndicator(getString(R.string.online),
                         null),
                 OnlineFragment.class, null);
 		// 4
 		tabHost.addTab(
-				tabHost.newTabSpec("More").setIndicator("More",
+				tabHost.newTabSpec(getString(R.string.more)).setIndicator(getString(R.string.more),
                         null),
                 MoreFragment.class, null);
 
 
+
+        Locale l = Locale.getDefault();
+        String language = l.getLanguage();
+
+        if (!"zh".equals(language)) {
+            final TabWidget tw = (TabWidget) tabHost.findViewById(android.R.id.tabs);
+            for (int i = 0; i < tw.getChildCount(); ++i) {
+                final View tabView = tw.getChildTabViewAt(i);
+                final TextView tv = (TextView) tabView.findViewById(android.R.id.title);
+                tv.setTextSize(10);
+            }
+        }
 
 	}
 
@@ -140,7 +160,7 @@ public class ContentActivity extends FragmentActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Utils.ShowAlertDialog(activity , "訊息" ,"確定要離開，回到登入頁? " ,
+            Utils.ShowAlertDialog(activity , getString(R.string.msg) ,getString(R.string.areyouleft)  ,
                new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog,
@@ -151,7 +171,7 @@ public class ContentActivity extends FragmentActivity {
                     Utils.circlesBak = null ;
                     finish();
                 }
-            },"確定" , null  ,"取消" , null ) ;
+            }, getString(R.string.yes)  , null  , getString(R.string.cancelled)  , null ) ;
 
 		}
 		return super.onKeyDown(keyCode, event);
@@ -166,7 +186,7 @@ public class ContentActivity extends FragmentActivity {
                 finish();
                 return true;
             case R.id.path_setting:
-                Utils.promptSpeechInput(activity, "請問您要去哪?");
+                Utils.promptSpeechInput(activity, getString(R.string.wouldyouliketogo));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -197,7 +217,7 @@ public class ContentActivity extends FragmentActivity {
 
                     input.setText(result.get(0), TextView.BufferType.EDITABLE);
 
-                    Utils.ShowAlertDialog(activity,  "請問您是要去這裡嗎?",  "",click1 , "確認", null, "取消", input);
+                    Utils.ShowAlertDialog(activity,  getString(R.string.wheredoyougo),  "",click1 ,getString(R.string.yes), null,getString(R.string.cancelled), input);
 
                 }
                 break;
@@ -208,6 +228,7 @@ public class ContentActivity extends FragmentActivity {
 	public void onStart() {
 		super.onStart();
         MapFragment.mCircles =null;
+        FriendsFragment.getFriends();
 
 	}
 

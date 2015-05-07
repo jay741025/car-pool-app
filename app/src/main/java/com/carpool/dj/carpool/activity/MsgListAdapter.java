@@ -66,20 +66,16 @@ public class MsgListAdapter extends BaseAdapter {
         JSONObject oj;
         try {
             oj = data.getJSONObject(data.length() - 1 - position);
-            vi = inflater.inflate(R.layout.msg_row, null);
-            TextView msg = (TextView) vi.findViewById(R.id.msg);
-            msg.setText(oj.getString("msg"));
-            TextView time = (TextView) vi.findViewById(R.id.time);
-            time.setText(oj.getString("time"));
-            TextView name = (TextView) vi.findViewById(R.id.name);
-            name.setTag(oj.getString("id"));
-            name.setText(oj.getString("name"));
-
-           //ProfilePictureView profilePictureView = (ProfilePictureView) vi
-                  // .findViewById(R.id.profilePicture);
-           //profilePictureView.setProfileId(oj.getString("pic").replace("facebook_",""));
-
-
+            if(oj.has("id")) {
+                vi = inflater.inflate(R.layout.msg_row, null);
+                TextView msg = (TextView) vi.findViewById(R.id.msg);
+                msg.setText(oj.getString("msg"));
+                TextView time = (TextView) vi.findViewById(R.id.time);
+                time.setText(oj.getString("time"));
+                TextView name = (TextView) vi.findViewById(R.id.name);
+                name.setTag(oj.getString("id"));
+                name.setText(oj.getString("name"));
+            }
 
         } catch (JSONException e1) {
             Utils.ExceptionHandler(e1, ContentActivity.tracker, activity);

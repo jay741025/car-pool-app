@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="name"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
  	</LinearLayout>
@@ -47,12 +47,12 @@
 	              android:id="@+id/button1"
 	              android:layout_width="wrap_content"
 	              android:layout_height="wrap_content"
-	              android:text="邀請共乘" />
+	              android:text="@string/invite" />
 	           <Button
 	              android:id="@+id/button2"
 	              android:layout_width="wrap_content"
 	              android:layout_height="wrap_content"
-	              android:text="TALK" />
+	              android:text="@string/talk" />
 	           </LinearLayout>
 	           <LinearLayout 
 		    android:layout_width="fill_parent"
@@ -63,12 +63,12 @@
 	              android:id="@+id/button3"
 	              android:layout_width="wrap_content"
 	              android:layout_height="wrap_content"
-	              android:text="看到你" />
+	              android:text="@string/seeyou" />
 	             <Button
 	              android:id="@+id/button4"
 	              android:layout_width="wrap_content"
 	              android:layout_height="wrap_content"
-	              android:text="上車" />
+	              android:text="@string/geton" />
 
 		</LinearLayout>
         <LinearLayout
@@ -80,7 +80,22 @@
                 android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="觀看目的地" />
+                android:text="@string/watchdestinations" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            >
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addfriend" />
 
 
         </LinearLayout>

@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 
 @SuppressLint("ViewHolder")
-public class OnlineListAdapter extends BaseAdapter {
+public class FriendsListAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
 
@@ -33,7 +33,7 @@ public class OnlineListAdapter extends BaseAdapter {
     // private String authToken ;
     private View vi;
 
-    public OnlineListAdapter(Activity a, JSONArray d) {
+    public FriendsListAdapter(Activity a, JSONArray d) {
         activity = a;
         data = d;
         inflater = (LayoutInflater) activity
@@ -67,7 +67,7 @@ public class OnlineListAdapter extends BaseAdapter {
         JSONObject oj;
         try {
             oj = data.getJSONObject(data.length() - 1 - position);
-            vi = inflater.inflate(R.layout.online_row, null);
+            vi = inflater.inflate(R.layout.friends_row, null);
             if(oj.has("id") && !oj.getString("id").equals("")) {
                 //TextView msg = (TextView) vi.findViewById(R.id.msg);
                 // msg.setText(oj.getString("msg"));
@@ -82,10 +82,12 @@ public class OnlineListAdapter extends BaseAdapter {
                 if (oj.has("pic") && !oj.getString("pic").equals("")) {
                     profilePictureView.setProfileId(oj.getString("pic").replace("facebook_", ""));
                 }
-                if (oj.has("destination") && !oj.getString("destination").equals("")&& !oj.getString("destination").equals("null")) {
-                    TextView destination = (TextView) vi.findViewById(R.id.destination);
-                    destination.setText(oj.getString("destination"));
+
+                TextView status = (TextView) vi.findViewById(R.id.status);
+                if (oj.has("status") && !oj.getString("status").equals("")) {
+                    status.setText((oj.getString("status").equals("1") ? Utils.nowActivity.getString(R.string.online) : Utils.nowActivity.getString(R.string.offline)));
                 }
+
 
             }
 

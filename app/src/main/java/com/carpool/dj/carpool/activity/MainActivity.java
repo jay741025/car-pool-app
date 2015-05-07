@@ -241,7 +241,7 @@ public class MainActivity extends Activity {
                                 Utils.UserName =input.getText().toString();
                                 login();
                             }
-                        }, "確認", null, "取消", input);
+                        }, getString(R.string.yes), null,getString(R.string.cancelled), input);
 
 
 
@@ -752,7 +752,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            return false;
+           //return false;
         }
         return super.onKeyDown(keyCode, event);
     }

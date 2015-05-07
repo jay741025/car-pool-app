@@ -33,8 +33,14 @@
 	        android:layout_height="match_parent"
 	        android:orientation="horizontal"
                 android:gravity="center"
-	         >    
+	         >
 
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="horizontal"
+					android:gravity="center|left"
+					android:layout_weight="1">
 			<TextView
 			    android:id="@+id/name"
 			    android:layout_width="match_parent"
@@ -42,9 +48,35 @@
 			    android:layout_marginLeft="2dp"
 			    android:layout_weight="1"
 			    android:padding="1dp"
-			    android:text="111"
+			    android:text=""
 			    android:textSize="21sp" />
+					</LinearLayout>
 
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="horizontal"
+					android:gravity="center|right"
+					android:layout_weight="1">
+				<TextView
+					android:id="@+id/destination_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="2dp"
+					android:layout_weight="1"
+					android:padding="1dp"
+					android:text="@string/go_to"
+					android:textSize="17sp" />
+				<TextView
+					android:id="@+id/destination"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="2dp"
+					android:layout_weight="1"
+					android:padding="1dp"
+					android:text=""
+					android:textSize="17sp" />
+			</LinearLayout>
             </LinearLayout>
 
             </LinearLayout>

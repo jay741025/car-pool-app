@@ -186,11 +186,11 @@ public class MapFragment extends Fragment implements
 
 
             profilePictureView = (ProfilePictureView) this.getView().findViewById(R.id.profilePicture);
-            profilePictureView.setProfileId(Utils.UserPic.replace("facebook_",""));
+            profilePictureView.setProfileId(Utils.UserPic.replace("facebook_", ""));
 
             if(!login) {
                 MsgFragment.putList(Utils.UserPic, Utils.UserName,
-                        Utils.getSimSerialNumber(Utils.nowActivity), "歡迎使用共乘趣");
+                        Utils.getSimSerialNumber(Utils.nowActivity), getString(R.string.welcomecarpool));
             }
 
 
@@ -199,8 +199,11 @@ public class MapFragment extends Fragment implements
 
             if (gps.canGetLocation()) {
                 spinner = (Spinner) this.getView().findViewById(R.id.spinner1);
-                String[] lunch = { "1KM", "2KM", "3KM", "4KM", "5KM", "6KM",
-                        "7KM", "8KM", "9KM", "10KM" };
+
+                List<String> lunch = new ArrayList<String>();
+                for(int i=0 ;i<10 ;i++){
+                    lunch.add(i ,(i+1) + getString(R.string.km)) ;
+                }
                 lunchList = new ArrayAdapter<String>(Utils.nowActivity,
                         android.R.layout.simple_spinner_item, lunch);
                 spinner.setAdapter(lunchList);
@@ -216,12 +219,12 @@ public class MapFragment extends Fragment implements
 
                         if(DEFAULT_RADIUS !=  (position + 1) * 1000) {
                             Toast.makeText(Utils.nowActivity,
-                                    "搜尋範圍為:" + (position + 1) + "公里",
+                                   getString(R.string.searchscope) + (position + 1) + getString(R.string.km) ,
                                     Toast.LENGTH_SHORT).show();
                             DEFAULT_RADIUS = (position + 1) * 1000;
                             MsgFragment.putList(Utils.UserPic, Utils.UserName,
-                                    Utils.getSimSerialNumber(Utils.nowActivity), "搜尋範圍為:"
-                                            + (position + 1) + "公里");
+                                    Utils.getSimSerialNumber(Utils.nowActivity),getString(R.string.searchscope)
+                                            + (position + 1) + getString(R.string.km) );
                         }
 
                         //MsgFragment.setList();
@@ -239,7 +242,7 @@ public class MapFragment extends Fragment implements
                 if (onStatus == 0 &&  !login ) {
                     MsgFragment.putList(Utils.UserPic, Utils.UserName,
                             Utils.getSimSerialNumber(Utils.nowActivity),
-                            "請先上線，才可以搜尋到人喔!");
+                            getString(R.string.pleaseontheline));
                 }
 
                 imageButton1 = (ImageButton) this.getView().findViewById(R.id.imageButton1);
@@ -249,7 +252,7 @@ public class MapFragment extends Fragment implements
                         transport = 1;
                         MsgFragment.putList(Utils.UserPic, Utils.UserName,
                                 Utils.getSimSerialNumber(Utils.nowActivity),
-                                "變更交通工具為=>走路");
+                               getString(R.string.changethevehicleis)+"=>"+  getString(R.string.run));
                         imageButton1.setBackgroundColor(Color
                                 .parseColor("#FF3333"));
                         imageButton2.setBackgroundColor(Color
@@ -267,9 +270,9 @@ public class MapFragment extends Fragment implements
                         transport = 2;
                         MsgFragment.putList(Utils.UserPic, Utils.UserName,
                                 Utils.getSimSerialNumber(Utils.nowActivity),
-                                "變更交通工具為=>騎車");
-                        imageButton2.setBackgroundColor(Color
-                                .parseColor("#FF3333"));
+                                getString(R.string.changethevehicleis) + "=>"+ getString(R.string.bike));
+                                imageButton2.setBackgroundColor(Color
+                                        .parseColor("#FF3333"));
                         imageButton1.setBackgroundColor(Color
                                 .parseColor("#888888"));
                         imageButton3.setBackgroundColor(Color
@@ -285,7 +288,7 @@ public class MapFragment extends Fragment implements
                         transport = 3;
                         MsgFragment.putList(Utils.UserPic, Utils.UserName,
                                 Utils.getSimSerialNumber(Utils.nowActivity),
-                                "變更交通工具為=>開車");
+                                getString(R.string.changethevehicleis)+"=>"+ getString(R.string.car));
                         imageButton3.setBackgroundColor(Color
                                 .parseColor("#FF3333"));
                         imageButton2.setBackgroundColor(Color
@@ -309,10 +312,10 @@ public class MapFragment extends Fragment implements
                     public void onCheckedChanged(CompoundButton buttonView,
                                                  boolean isChecked) {
                         if (isChecked) {
-                            Toast.makeText(Utils.nowActivity, "您上線了!",
+                            Toast.makeText(Utils.nowActivity,  getString(R.string.online) +"!",
                                     Toast.LENGTH_SHORT).show();
                             MsgFragment.putList(Utils.UserPic, Utils.UserName,
-                                    Utils.getSimSerialNumber(Utils.nowActivity), "您上線了!");
+                                    Utils.getSimSerialNumber(Utils.nowActivity), getString(R.string.online)+"!");
                             onStatus = 1;
                             //MsgFragment.setList();
                             setCarInfo();
@@ -320,10 +323,10 @@ public class MapFragment extends Fragment implements
                             setTimerTask();
 
                         } else {
-                            Toast.makeText(Utils.nowActivity, "您下線了!",
+                            Toast.makeText(Utils.nowActivity, getString(R.string.offline)+"!",
                                     Toast.LENGTH_SHORT).show();
                             MsgFragment.putList(Utils.UserPic, Utils.UserName,
-                                    Utils.getSimSerialNumber(Utils.nowActivity), "您下線了!");
+                                    Utils.getSimSerialNumber(Utils.nowActivity), getString(R.string.offline)+"!");
                             onStatus = 0;
                             //MsgFragment.setList();
                             setCarInfo();
@@ -356,7 +359,7 @@ public class MapFragment extends Fragment implements
 
 
             } else {
-                Toast.makeText(Utils.nowActivity, "can't get location",
+                Toast.makeText(Utils.nowActivity,getString(R.string.cantgetlocation),
                         Toast.LENGTH_LONG).show();
                 LoginManager.getInstance().logOut();
                 MapFragment.login =false;
@@ -493,7 +496,7 @@ public class MapFragment extends Fragment implements
 							setCarInfo();
 
 						} else {
-							Toast.makeText(Utils.nowActivity, "can't get location",
+							Toast.makeText(Utils.nowActivity, Utils.nowActivity.getString(R.string.cantgetlocation),
 									Toast.LENGTH_LONG).show();
 						}
 					}
@@ -519,9 +522,9 @@ public class MapFragment extends Fragment implements
 			imageView.setImageResource(Utils.getResourceId(Utils.nowActivity,
 					"car_pool_sussuse", "drawable", Utils.nowActivity.getPackageName()));
 
-			new Builder(Utils.getNowActivity()).setTitle("恭喜")
+			new Builder(Utils.getNowActivity()).setTitle(Utils.nowActivity.getString(R.string.congratulation))
 					.setIcon(android.R.drawable.ic_dialog_info)
-					.setView(imageView).setPositiveButton("確定", null).show();
+					.setView(imageView).setPositiveButton(Utils.nowActivity.getString(R.string.yes), null).show();
 
 			mySwitch.setChecked(false);
 
@@ -535,29 +538,29 @@ public class MapFragment extends Fragment implements
 		try {
 			final EditText input = new EditText(Utils.getNowActivity());
 			Builder builder = new Builder(Utils.getNowActivity())
-					.setTitle("TALK")
+					.setTitle(Utils.nowActivity.getString(R.string.talk))
 					.setIcon(android.R.drawable.ic_dialog_info).setView(input);
 
-			builder.setNeutralButton("TALK",
-					new OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+			builder.setNeutralButton(Utils.nowActivity.getString(R.string.yes),
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-							if (!"".equals(input.getText().toString())) {
-								setCarEvent(accountId, accountName, 3, input
-										.getText().toString());
-								return;
-							}
+                            if (!"".equals(input.getText().toString())) {
+                                setCarEvent(accountId, accountName, 3, input
+                                        .getText().toString());
+                                return;
+                            }
 
-						}
-					});
-			builder.setPositiveButton("取消",
-					new OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+			builder.setPositiveButton(Utils.nowActivity.getString(R.string.cancelled),
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-						}
-					});
+                        }
+                    });
 			builder.show();
 		} catch (Exception e) {
 			Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
@@ -603,27 +606,27 @@ public class MapFragment extends Fragment implements
 			myAlertDialog.setView(layout);
 
 			if (eventType == 1) {
-				title = "邀請您共乘";
-				backMsg = "同意您共乘";
-				backMsg2 = "不同意您共乘";
+				title =   Utils.nowActivity.getString(R.string.invite) + Utils.nowActivity.getString(R.string.carpool);
+				backMsg =Utils.nowActivity.getString(R.string.agree) + Utils.nowActivity.getString(R.string.carpool);
+				backMsg2 = Utils.nowActivity.getString(R.string.disagree) + Utils.nowActivity.getString(R.string.carpool);
 			} else if (eventType == 2) {
-				title = "對方回覆";
+				title =Utils.nowActivity.getString(R.string.reply);
 			} else if (eventType == 3) {
-				title = "對方TALK";
+				title = Utils.nowActivity.getString(R.string.talk);
 			} else if (eventType == 5) {
-				title = "對方回覆";
+				title =Utils.nowActivity.getString(R.string.reply);
 			} else if (eventType == 7) {
-				title = "對方回覆";
+				title =Utils.nowActivity.getString(R.string.reply);
 			} else if (eventType == 8) {
-				title = "上車囉!";
-				title = "同意您共乘";
+				title = Utils.nowActivity.getString(R.string.geton);
+				title =Utils.nowActivity.getString(R.string.agree)  + Utils.nowActivity.getString(R.string.carpool);
 			} else {
 				return;
 			}
 
 			if (eventType == 1) {
 
-				myAlertDialog.setNeutralButton("同意",
+				myAlertDialog.setNeutralButton(Utils.nowActivity.getString(R.string.agree),
 						new OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -631,7 +634,7 @@ public class MapFragment extends Fragment implements
 								setCarEvent(accountId, accountName, 2, backMsg);
 							}
 						});
-				myAlertDialog.setPositiveButton("不同意",
+				myAlertDialog.setPositiveButton(Utils.nowActivity.getString(R.string.disagree),
 						new OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -640,14 +643,14 @@ public class MapFragment extends Fragment implements
 							}
 						});
 			} else if (eventType == 3) {
-				myAlertDialog.setNeutralButton("回覆",
+				myAlertDialog.setNeutralButton(Utils.nowActivity.getString(R.string.reply),
 						new OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								replay(accountId, accountName);
 							}
 						});
-				myAlertDialog.setPositiveButton("取消",
+				myAlertDialog.setPositiveButton(Utils.nowActivity.getString(R.string.cancelled),
 						new OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -656,13 +659,13 @@ public class MapFragment extends Fragment implements
 							}
 						});
 			} else if (eventType == 7) {
-				myAlertDialog.setPositiveButton("確定",
+				myAlertDialog.setPositiveButton(Utils.nowActivity.getString(R.string.yes),
 						new OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								setCarEvent(accountId, accountName, 8,
-										"恭喜使用共乘趣成功!");
+                                        Utils.nowActivity.getString(R.string.cantgetlocation));
 								showSussuse();
 							}
 						});
@@ -671,7 +674,7 @@ public class MapFragment extends Fragment implements
 				return;
 			} else {
 
-				myAlertDialog.setPositiveButton("確定",
+				myAlertDialog.setPositiveButton(Utils.nowActivity.getString(R.string.yes),
 						new OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -822,7 +825,8 @@ public class MapFragment extends Fragment implements
                                 OnlineFragment.putList(json.getJSONObject(i).getString(
                                         "accountPic"), json.getJSONObject(i).getString(
                                         "accountName"), json.getJSONObject(i).getString(
-                                        "accountId"));
+                                        "accountId"), (json.getJSONObject(i).has("destination") ?
+                                        json.getJSONObject(i).getString("destination") : "" ));
 							}
 
 							markMapbak = markMap;
@@ -845,8 +849,8 @@ public class MapFragment extends Fragment implements
 									String accountPic = markList.getJSONObject(
 											i).getString("accountPic");
 
-                                    MsgFragment.putList(accountPic, Utils.UserName, Utils.SimSerialNumber,
-                                            "發現了" + accountName);
+                                    MsgFragment.putList(accountPic, Utils.UserName, Utils.getSimSerialNumber(Utils.nowActivity),
+                                            Utils.nowActivity.getString(R.string.find) + accountName);
 								}
 							}
 							for (int i = 0; i < beforeMarkList.length(); i++) {
@@ -870,7 +874,7 @@ public class MapFragment extends Fragment implements
 													"accountPic");
 
                                     MsgFragment.putList(accountPic, accountName, accountId,
-                                            accountName + "離線了");
+                                            accountName + Utils.nowActivity.getString(R.string.offline));
 								}
 							}
 							beforeMarkList = markList;
@@ -930,7 +934,7 @@ public class MapFragment extends Fragment implements
 			// Override the default content description on the view, for
 			// accessibility mode.
 			// Ideally this string would be localised.
-			mMap.setContentDescription("共乘趣");
+			mMap.setContentDescription(Utils.nowActivity.getString(R.string.app_name));
 			mMap.setOnMarkerClickListener(this);
 			mMap.setOnMyLocationButtonClickListener(this);
 			mMap.setMyLocationEnabled(true);
@@ -956,7 +960,7 @@ public class MapFragment extends Fragment implements
 
 			// Move the map so that it is centered on the initial circle
 			mMap.moveCamera(CameraUpdateFactory
-					.newLatLngZoom(MyLocation, mZoom));
+                    .newLatLngZoom(MyLocation, mZoom));
 			setCarInfo();
 
 		} catch (Exception e) {
@@ -981,11 +985,11 @@ public class MapFragment extends Fragment implements
 					position.longitude);
             MsgFragment.putList(Utils.UserPic, Utils.UserName,
                     Utils.getSimSerialNumber(Utils.nowActivity),
-                    "移動位置到=>"
+                    Utils.nowActivity.getString(R.string.movelocation)+"=>"
                             + ("".equals(address) ? marker.getPosition()
                             : address));
 			Toast.makeText(Utils.nowActivity,
-					"移動位置到=> " +  ("".equals(address) ? marker.getPosition()
+                    Utils.nowActivity.getString(R.string.movelocation)+"=>" +  ("".equals(address) ? marker.getPosition()
                             : address),
 					Toast.LENGTH_LONG).show();
             //MsgFragment.setList();
@@ -1064,7 +1068,7 @@ public class MapFragment extends Fragment implements
 				moveLocation = false;
 
 			} else {
-				Toast.makeText(Utils.nowActivity, "can't get location",
+				Toast.makeText(Utils.nowActivity,Utils.nowActivity.getString(R.string.cantgetlocation),
 						Toast.LENGTH_LONG).show();
 			}
 
@@ -1137,10 +1141,14 @@ public class MapFragment extends Fragment implements
                                 near++;
                             }
                         }
-                        if(near >= 2){
-                            showlist(resultList);
-                        }else{
-                            showSettings(accountPic, accountName,accountId);
+                        try {
+                            if(near >= 2){
+                                showlist(resultList);
+                            }else{
+                                showSettings(accountPic, accountName,accountId);
+                            }
+                        } catch (Exception e) {
+                            Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
                         }
 
 					}
@@ -1173,11 +1181,10 @@ public class MapFragment extends Fragment implements
     }
 
 
-    private void showlist(JSONArray resultList) {
+    private static void showlist(JSONArray resultList) {
         LayoutInflater inflater = Utils.nowActivity.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.fragment_online,
-                (ViewGroup) this.getView().findViewById(R.id.dialog));
-
+                (ViewGroup) Utils.nowActivity.findViewById(R.id.dialog));
         listView = (ListView) layout.findViewById(R.id.listView);
         listView.setAdapter(null);
         Log.i("","resultList length=>"+resultList.length());
@@ -1200,6 +1207,7 @@ public class MapFragment extends Fragment implements
                                 .getString("accountName");
                         String accountPic = markList.getJSONObject(index)
                                 .getString("accountPic");
+                        /*
                         String destination = markList.getJSONObject(index)
                                 .getString("destination");
 
@@ -1207,6 +1215,7 @@ public class MapFragment extends Fragment implements
                                 .getDouble("latitude");
                         Double longitude = markList.getJSONObject(index)
                                 .getDouble("longitude");
+                                */
                         alertDialog.cancel();
                         showSettings(accountPic, accountName, accountId);
                     } catch (JSONException e) {
@@ -1221,14 +1230,14 @@ public class MapFragment extends Fragment implements
         });
 
         myAlertDialog = new Builder(Utils.nowActivity);
-        myAlertDialog.setTitle("選擇相近的人");
+        myAlertDialog.setTitle(Utils.nowActivity.getString(R.string.choosepeopleclose));
 
         myAlertDialog.setIcon(android.R.drawable.ic_dialog_info);
         myAlertDialog.setCancelable(true);
         myAlertDialog.setView(layout);
         // Looper.loop();
 
-        myAlertDialog.setPositiveButton("取消",
+        myAlertDialog.setPositiveButton(Utils.nowActivity.getString(R.string.cancelled),
                 new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1268,7 +1277,7 @@ public class MapFragment extends Fragment implements
 			button1.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					setCarEvent(toId, toName, 1, "邀請您共乘!");
+					setCarEvent(toId, toName, 1, Utils.nowActivity.getString(R.string.invite)+Utils.nowActivity.getString(R.string.carpool));
 					alertDialog.dismiss();
 				}
 			});
@@ -1284,7 +1293,7 @@ public class MapFragment extends Fragment implements
 			button3.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					setCarEvent(toId, toName, 5, "看到你了!");
+					setCarEvent(toId, toName, 5, Utils.nowActivity.getString(R.string.seeyou));
 					alertDialog.dismiss();
 				}
 			});
@@ -1292,7 +1301,7 @@ public class MapFragment extends Fragment implements
 			button4.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					setCarEvent(toId, toName, 7, "上車囉!");
+					setCarEvent(toId, toName, 7, Utils.nowActivity.getString(R.string.geton));
 					alertDialog.dismiss();
 				}
 			});
@@ -1317,7 +1326,7 @@ public class MapFragment extends Fragment implements
                                         .getDouble("longitude");
                                 MapFragment.getLocationInfo(destination, latitude, longitude, false);
                             }else{
-                                Utils.ShowAlertDialog(Utils.nowActivity,"訊息","此人無目的地");
+                                Utils.ShowAlertDialog(Utils.nowActivity,Utils.nowActivity.getString(R.string.msg),Utils.nowActivity.getString(R.string.thispersonnodestination));
                             }
                         } catch (JSONException e) {
                             Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
@@ -1330,15 +1339,37 @@ public class MapFragment extends Fragment implements
                     alertDialog.dismiss();
                 }
             });
+            Boolean isFriend =false ;
+            for(int i =0 ;i< FriendsFragment.resultList.length();i++){
+                JSONObject oj = FriendsFragment.resultList.getJSONObject(i);
+                if(oj.has("id") && oj.getString("id").equals(toId)) {
+                    isFriend =true ;
+                }
+            }
+            Button button6 = (Button) layout.findViewById(R.id.button6);
+            if(!isFriend) {
+
+                button6.setVisibility(View.VISIBLE);
+                button6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addFriend(toId);
+                        alertDialog.dismiss();
+                    }
+                });
+            }else{
+                button6.setVisibility(View.INVISIBLE);
+            }
+
 			myAlertDialog = new Builder(Utils.nowActivity);
-			myAlertDialog.setTitle("使用共乘趣功能");
+			myAlertDialog.setTitle(Utils.nowActivity.getString(R.string.function));
 
 			myAlertDialog.setIcon(android.R.drawable.ic_dialog_info);
 			myAlertDialog.setCancelable(true);
 			myAlertDialog.setView(layout);
 			// Looper.loop();
 
-			myAlertDialog.setPositiveButton("取消",
+			myAlertDialog.setPositiveButton(Utils.nowActivity.getString(R.string.cancelled),
 					new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -1369,7 +1400,7 @@ public class MapFragment extends Fragment implements
                     super.handleMessage(msg);
                     try {
                         Toast.makeText(Utils.nowActivity,
-                                "傳送成功!",
+                                Utils.nowActivity.getString(R.string.send) +Utils.nowActivity.getString(R.string.success),
                                 Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
@@ -1608,7 +1639,7 @@ public class MapFragment extends Fragment implements
 		  protected void onPostExecute(List<List<HashMap<String, String>>> result) {
 			  
 		   if(result.size() == 0){
-			   Utils.ShowAlertDialog(Utils.nowActivity, "路徑規劃", "失敗!無找到相關路線規劃!");
+			   Utils.ShowAlertDialog(Utils.nowActivity, Utils.nowActivity.getString(R.string.pathPlanning), Utils.nowActivity.getString(R.string.failedNofindrelevantrouteplanning));
 			   return;
 		   }
 		   
@@ -1719,6 +1750,52 @@ public class MapFragment extends Fragment implements
                         + 0 + "\""
                         + ",\"longitude\":\""
                         + 0
+                        + "\" }", "UTF-8");
+
+            } catch (UnsupportedEncodingException e) {
+                Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
+            }
+
+            request.setHttpEntity(postEntity);
+            new Thread(request).start();
+
+        } catch (Exception e) {
+            Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
+        }
+
+    }
+
+    @SuppressLint("HandlerLeak")
+    protected static void addFriend(String otherId) {
+
+        try {
+
+            Handler handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    try {
+                        // Bundle data = msg.getData();
+                        // String jSonData = data.getString("Json_Data");
+                        // int status = data.getInt("status");
+                        // Log.i("", "result-->" + data.getString("Json_Data"));
+                        // Log.i("", "status-->" + status);
+
+                    } catch (Exception e) {
+                        Utils.ExceptionHandler(e, tracker, Utils.nowActivity);
+                    }
+
+                }
+            };
+
+            HttpClientRequest request = new HttpClientRequest(Utils.nowActivity,
+                    Utils.APIUrl + "car/addCarFriends", HttpClientRequest.POST,
+                    handler);
+            HttpEntity postEntity = null;
+            try {
+                postEntity = new StringEntity("{\"accountId\":\""
+                        + Utils.getSimSerialNumber(Utils.nowActivity)
+                        + "\",\"friendsId\":\"" +otherId
                         + "\" }", "UTF-8");
 
             } catch (UnsupportedEncodingException e) {
